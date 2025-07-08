@@ -1,0 +1,28 @@
+# Habilita mod_rewrite
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Redirige todo lo que no sea archivo o directorio a index.php
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ index.php [QSA,L]
+</IfModule>
+
+# Ajustes para archivos multimedia
+AddType video/mp4 .mp4
+AddType audio/mpeg .mp3
+AddType audio/wav .wav
+AddType image/png .png
+AddType image/jpeg .jpg .jpeg
+AddType application/javascript .js
+AddType text/css .css
+
+# Permitir CORS (opcional, solo si necesitas acceder desde otro dominio)
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+</IfModule>
+
+# Opcional: evita que se descargue el código PHP si hay un error
+<FilesMatch "\.php$">
+    SetHandler application/x-httpd-php
+</FilesMatch>
